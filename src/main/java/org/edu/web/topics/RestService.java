@@ -23,11 +23,11 @@ public class RestService {
 	@Inject
 	private JmsTopicConsumer consumer;
 
-	@GET
-	@Path("/init")
-	public void init() {
-		consumer.initialize();
-	}
+	//@GET
+	//@Path("/init")
+	//public void init() {
+	//	consumer.initialize();
+	//}
 
 	@GET
 	@Path("/send-topic-message")

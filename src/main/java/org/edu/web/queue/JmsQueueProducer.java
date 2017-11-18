@@ -1,17 +1,13 @@
 package org.edu.web.queue;
 
-import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
+import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageProducer;
 import javax.jms.Queue;
-import javax.jms.Session;
-import javax.jms.Topic;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  * @author <a href="mailto:ivo.rusev@sirma.bg">Ivo Rusev</a>
@@ -20,30 +16,18 @@ import javax.naming.NamingException;
 @ApplicationScoped
 public class JmsQueueProducer {
 
-	private MessageProducer producer;
-	private Session session;
+	@Inject
+	@JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory")
+	private JMSContext context;
 
-	@PostConstruct
-	public void init() {
-		try {
-			ConnectionFactory factory = InitialContext.doLookup("java:jboss/DefaultJMSConnectionFactory");
-			Connection connection = factory.createConnection();
-			Queue queue = InitialContext.doLookup("java:jboss/exported/jms/queue/test");
-
-			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			producer = session.createProducer(queue);
-		} catch (NamingException e) {
-			e.printStackTrace();
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
-	}
+	@Resource(lookup = "java:jboss/exported/jms/queue/test")
+	private Queue queue;
 
 	public void sendMessage(String textMessage) {
 		try {
-			Message message = session.createMessage();
+			Message message = context.createMessage();
 			message.setStringProperty("messageKey", textMessage);
-			producer.send(message);
+			context.createProducer().send(queue, message);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
