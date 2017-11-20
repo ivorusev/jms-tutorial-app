@@ -23,24 +23,6 @@ public class JmsTopicConsumer {
 	@Resource(lookup = "java:jboss/exported/jms/topic/test")
 	private Topic topic;
 
-	//public void initialize() {
-	//	try {
-	//		ConnectionFactory factory = InitialContext.doLookup("java:jboss/DefaultJMSConnectionFactory");
-	//		Connection connection = factory.createConnection();
-	//		connection.start();
-	//
-	//		Topic topic = InitialContext.doLookup("java:jboss/exported/jms/topic/test");
-	//		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-	//
-	//		firstConsumer = session.createDurableSubscriber(topic, "1");
-	//		secondConsumer = session.createDurableSubscriber(topic, "2");
-	//	} catch (NamingException e) {
-	//		e.printStackTrace();
-	//	} catch (JMSException e) {
-	//		e.printStackTrace();
-	//	}
-	//}
-
 	public String readFromFirstConsumer() {
 		try {
 			JMSConsumer consumer1 = context.createSharedDurableConsumer(topic, "1");
@@ -56,13 +38,4 @@ public class JmsTopicConsumer {
 		return null;
 	}
 
-	//public String readFromSecondConsumer() {
-	//	try {
-	//		Message received = secondConsumer.receive(2000);
-	//		return received == null ? "message was empty" : received.getStringProperty("messageKey");
-	//	} catch (JMSException e) {
-	//		e.printStackTrace();
-	//	}
-	//	return null;
-	//}
 }

@@ -1,4 +1,4 @@
-package org.edu.web.queue;
+package org.edu.web.rest;
 
 import javax.inject.Inject;
 import javax.json.Json;
@@ -10,10 +10,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import org.edu.web.queue.JmsQueueConsumer;
+import org.edu.web.queue.JmsQueueProducer;
+
 @Path("/jms")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
-public class RestService {
+public class QueueRestService {
 
 	@Inject
 	private JmsQueueProducer producer;

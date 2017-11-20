@@ -1,4 +1,4 @@
-package org.edu.web.topics;
+package org.edu.web.rest;
 
 import javax.inject.Inject;
 import javax.json.Json;
@@ -10,24 +10,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import org.edu.web.queue.JmsQueueConsumer;
-import org.edu.web.queue.JmsQueueProducer;
+import org.edu.web.topics.JmsTopicConsumer;
+import org.edu.web.topics.JmsTopicProducer;
 
 @Path("/topic")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
-public class RestService {
+public class TopicRestService {
 
 	@Inject
 	private JmsTopicProducer producer;
 	@Inject
 	private JmsTopicConsumer consumer;
-
-	//@GET
-	//@Path("/init")
-	//public void init() {
-	//	consumer.initialize();
-	//}
 
 	@GET
 	@Path("/send-topic-message")
