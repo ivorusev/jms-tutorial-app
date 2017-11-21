@@ -23,6 +23,12 @@ public class QueueRestService {
 	@Inject
 	private JmsQueueConsumer consumer;
 
+	/**
+	 * Sends a text message to a jms queue.
+	 *
+	 * @param message the message from the url param.
+	 * @return the {@link Response} object.
+	 */
 	@GET
 	@Path("/send-queue-message")
 	public Response getBooks(@QueryParam("message") String message) {
@@ -30,6 +36,11 @@ public class QueueRestService {
 		return Response.status(200).build();
 	}
 
+	/**
+	 * Reads a jms message from a jms queue and return a json with its contents.
+	 *
+	 * @return the {@link Response} object.
+	 */
 	@GET
 	@Path("/read-queue-message")
 	public Response readMessage() {

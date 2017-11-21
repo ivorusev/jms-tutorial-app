@@ -9,6 +9,7 @@ import javax.jms.JMSException;
 import javax.jms.JMSProducer;
 import javax.jms.Message;
 import javax.jms.Topic;
+import javax.naming.Name;
 
 /**
  * @author <a href="mailto:ivo.rusev@sirma.bg">Ivo Rusev</a>
@@ -21,6 +22,10 @@ public class JmsTopicProducer {
 	@JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory")
 	private JMSContext context;
 
+	/**
+	 * This injects a {@link Topic} by its JNDI name. Alternatively the {@link Topic}
+	 * can be looked up by using: {@link javax.naming.InitialContext#doLookup(Name)}
+	 */
 	@Resource(lookup = "java:jboss/exported/jms/topic/test")
 	private Topic topic;
 

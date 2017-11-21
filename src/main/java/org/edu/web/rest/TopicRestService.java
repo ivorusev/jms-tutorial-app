@@ -13,6 +13,9 @@ import javax.ws.rs.core.Response;
 import org.edu.web.topics.JmsTopicConsumer;
 import org.edu.web.topics.JmsTopicProducer;
 
+/**
+ * Rest services for {@link javax.jms.Topic} demonstration.
+ */
 @Path("/topic")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
