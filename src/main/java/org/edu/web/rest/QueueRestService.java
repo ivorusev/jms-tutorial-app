@@ -44,7 +44,9 @@ public class QueueRestService {
 	@GET
 	@Path("/read-queue-message")
 	public Response readMessage() {
-		JsonObject result = Json.createObjectBuilder().add("message", consumer.read()).build();
+		JsonObject result = Json.createObjectBuilder().add("message-" + System.currentTimeMillis(), consumer
+				.read()
+		).build();
 		return Response.status(200).entity(result).build();
 	}
 }

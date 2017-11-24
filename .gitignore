@@ -1,6 +1,4 @@
-atlassian-ide-plugin.xml
 bin/
-catalog-v001.xml
 .checkstyle
 .classpath
 .externalToolBuilders/
@@ -16,15 +14,9 @@ node_modules/
 serenity.properties
 .settings/
 .sonar-ide.properties
-.svn
 target/
 test-output/
-thucydides.properties
 .vagrant
 .tern-project
 src/test/resources/specs/**/.*
-*.iml
 *.eml
-
-!docker-rootfs/**/bin
-!docker-rootfs/**/*.patch

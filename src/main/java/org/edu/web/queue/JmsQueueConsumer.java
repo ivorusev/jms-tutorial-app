@@ -1,6 +1,10 @@
 package org.edu.web.queue;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.annotation.Resource;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
@@ -10,6 +14,9 @@ import javax.jms.Message;
 import javax.jms.Queue;
 import javax.naming.Name;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This is a sample class that creates a JMS consumer and reads a message from a Queue.
  *
@@ -18,6 +25,8 @@ import javax.naming.Name;
  */
 @ApplicationScoped
 public class JmsQueueConsumer {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	/**
 	 * {@link JMSContext} comes from the jms 2.0 specification and simplifies the API by wrapping the
@@ -45,14 +54,15 @@ public class JmsQueueConsumer {
 	 *
 	 * @return the message string.
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public String read() {
 		try {
 			JMSConsumer consumer = context.createConsumer(queue);
 			Message received = consumer.receive(2000);
 			return received == null ? "message was empty" : received.getStringProperty("messageKey");
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error consuming message {}", e);
 		}
-		return null;
+		return "message was empty";
 	}
 }

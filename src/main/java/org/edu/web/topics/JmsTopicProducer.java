@@ -1,5 +1,7 @@
 package org.edu.web.topics;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,12 +13,17 @@ import javax.jms.Message;
 import javax.jms.Topic;
 import javax.naming.Name;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author <a href="mailto:ivo.rusev@sirma.bg">Ivo Rusev</a>
  * @since 03/11/2017
  */
 @ApplicationScoped
 public class JmsTopicProducer {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Inject
 	@JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory")
@@ -36,7 +43,7 @@ public class JmsTopicProducer {
 			message.setStringProperty("messageKey", textMessage);
 			producer.send(topic, message);
 		} catch (JMSException e) {
-			e.printStackTrace();
+			LOGGER.error("Error reading message ", e);
 		}
 	}
 }

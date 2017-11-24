@@ -1,5 +1,7 @@
 package org.edu.web.queue;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,6 +12,9 @@ import javax.jms.Message;
 import javax.jms.Queue;
 import javax.naming.Name;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Producer for simple JMS queue application.
  *
@@ -18,6 +23,7 @@ import javax.naming.Name;
  */
 @ApplicationScoped
 public class JmsQueueProducer {
+	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	/**
 	 * {@link JMSContext} comes from the jms 2.0 specification and simplifies the API by wrapping the
@@ -46,7 +52,7 @@ public class JmsQueueProducer {
 			message.setStringProperty("messageKey", textMessage);
 			context.createProducer().send(queue, message);
 		} catch (JMSException e) {
-			e.printStackTrace();
+			LOGGER.error("Error sending message {}", e);
 		}
 	}
 }
