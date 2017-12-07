@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import org.edu.queue.JmsQueueConsumer;
 import org.edu.queue.JmsQueueProducer;
 
-@Path("/jms")
+@Path("/")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 public class QueueRestService {

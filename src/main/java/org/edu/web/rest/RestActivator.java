@@ -6,6 +6,6 @@ import javax.ws.rs.core.Application;
 /**
  * The rest activator class.
  */
-@ApplicationPath("/rest")
+@ApplicationPath("/jms")
 public class RestActivator extends Application {
 }  

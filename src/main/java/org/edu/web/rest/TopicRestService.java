@@ -16,7 +16,7 @@ import org.edu.topic.JmsTopicProducer;
 /**
  * Rest services for {@link javax.jms.Topic} demonstration.
  */
-@Path("/topic")
+@Path("/")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 public class TopicRestService {

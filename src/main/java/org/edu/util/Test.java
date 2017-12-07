@@ -7,7 +7,6 @@ import javax.jms.JMSException;
 import javax.jms.JMSRuntimeException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -22,7 +21,7 @@ public class Test {
 
 	public void sendMessageJMS20(ConnectionFactory connectionFactory, Queue queue,
 			String text) {
-		try (JMSContext context = connectionFactory.createContext()){
+		try (JMSContext context = connectionFactory.createContext()) {
 			context.createProducer().send(queue, text);
 		} catch (JMSRuntimeException ex) {
 			// handle exception (details omitted)
@@ -45,7 +44,5 @@ public class Test {
 			// Handle error
 		}
 	}
-
-
 
 }
