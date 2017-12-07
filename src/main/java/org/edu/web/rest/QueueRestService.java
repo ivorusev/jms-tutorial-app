@@ -10,8 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import org.edu.web.queue.JmsQueueConsumer;
-import org.edu.web.queue.JmsQueueProducer;
+import org.edu.queue.JmsQueueConsumer;
+import org.edu.queue.JmsQueueProducer;
 
 @Path("/jms")
 @Consumes({ "application/json" })

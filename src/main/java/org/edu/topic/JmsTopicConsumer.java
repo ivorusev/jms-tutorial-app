@@ -1,4 +1,4 @@
-package org.edu.web.topics;
+package org.edu.topic;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;

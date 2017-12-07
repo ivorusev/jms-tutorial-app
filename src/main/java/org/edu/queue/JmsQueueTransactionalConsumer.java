@@ -1,4 +1,4 @@
-package org.edu.web.queue;
+package org.edu.queue;
 
 import java.lang.invoke.MethodHandles;
 
@@ -6,12 +6,14 @@ import javax.annotation.Resource;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.jms.JMSConnectionFactory;
-import javax.jms.JMSConsumer;
-import javax.jms.JMSContext;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.MessageConsumer;
 import javax.jms.Queue;
+import javax.jms.Session;
+import javax.naming.InitialContext;
 import javax.naming.Name;
 
 import org.slf4j.Logger;
@@ -24,23 +26,9 @@ import org.slf4j.LoggerFactory;
  * @since 03/11/2017
  */
 @ApplicationScoped
-public class JmsQueueConsumer {
+public class JmsQueueTransactionalConsumer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-	/**
-	 * {@link JMSContext} comes from the jms 2.0 specification and simplifies the API by wrapping the
-	 * {@link javax.jms.Session} and {@link javax.jms.Connection} objects.
-	 * <p>
-	 * The {@link JMSConnectionFactory} specifies which connection factory to be used. As parameter is used the JNDI
-	 * name.
-	 * <p>
-	 * Alternatively the queue
-	 * can be looked up by using: {@link javax.naming.InitialContext#doLookup(Name)}
-	 */
-	@Inject
-	@JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory")
-	private JMSContext context;
 
 	/**
 	 * This injects a queue by its JNDI name. Alternatively the queue
@@ -55,14 +43,27 @@ public class JmsQueueConsumer {
 	 * @return the message string.
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public String read() {
+	public String read() throws JMSException {
+		Connection connection = null;
+		Session session = null;
 		try {
-			JMSConsumer consumer = context.createConsumer(queue);
-			Message received = consumer.receive(2000);
-			return received == null ? "message was empty" : received.getStringProperty("messageKey");
+			ConnectionFactory factory = InitialContext.doLookup("java:jboss/DefaultJMSConnectionFactory");
+			connection = factory.createConnection();
+			connection.start();
+
+			session = connection.createSession(true, Session.SESSION_TRANSACTED);
+
+			if (true) {
+				throw new IllegalArgumentException();
+			}
+
+			MessageConsumer consumer = session.createConsumer(queue);
+			Message message = consumer.receive();
+			return message.getStringProperty("messageKey");
 		} catch (Exception e) {
-			LOGGER.error("Error consuming message {}", e);
+			connection.close();
+			session.close();
 		}
-		return "message was empty";
+		return null;
 	}
 }

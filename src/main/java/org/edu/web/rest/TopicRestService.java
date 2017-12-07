@@ -10,8 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import org.edu.web.topics.JmsTopicConsumer;
-import org.edu.web.topics.JmsTopicProducer;
+import org.edu.topic.JmsTopicConsumer;
+import org.edu.topic.JmsTopicProducer;
 
 /**
  * Rest services for {@link javax.jms.Topic} demonstration.
