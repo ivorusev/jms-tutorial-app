@@ -3,6 +3,7 @@ package org.edu.web.rest;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,6 +17,7 @@ import org.edu.queue.JmsQueueProducer;
 @Path("/")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
+@Transactional
 public class QueueRestService {
 
 	@Inject
