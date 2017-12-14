@@ -29,14 +29,14 @@ public class TopicRestService {
 	private JmsTopicConsumer consumer;
 
 	@GET
-	@Path("/send-topic-message")
+	@Path("/send-message")
 	public Response getBooks(@QueryParam("message") String message) {
 		producer.sendMessage(message);
 		return Response.status(200).build();
 	}
 
 	@GET
-	@Path("/read-topic-message")
+	@Path("/receive-message")
 	public Response readMessage() {
 		JsonObject result = Json.createObjectBuilder().add("message", consumer.readFromFirstConsumer()).build();
 		return Response.status(200).entity(result).build();

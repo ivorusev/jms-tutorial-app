@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import org.edu.queue.JmsQueueConsumer;
 import org.edu.queue.JmsQueueProducer;
 
-@Path("/")
+@Path("/queue")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 @Transactional
@@ -32,7 +32,7 @@ public class QueueRestService {
 	 * @return the {@link Response} object.
 	 */
 	@GET
-	@Path("/send-queue-message")
+	@Path("/send-message")
 	public Response getBooks(@QueryParam("message") String message) {
 		producer.sendMessage(message);
 		return Response.status(200).build();
@@ -44,7 +44,7 @@ public class QueueRestService {
 	 * @return the {@link Response} object.
 	 */
 	@GET
-	@Path("/read-queue-message")
+	@Path("/receive-message")
 	public Response readMessage() {
 		JsonObject result = Json.createObjectBuilder().add("message-" + System.currentTimeMillis(), consumer
 				.read()
